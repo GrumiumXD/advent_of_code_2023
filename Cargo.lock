@@ -8,6 +8,7 @@ version = "0.1.0"
 dependencies = [
  "argh",
  "day01",
+ "day02",
 ]
 
 [[package]]
@@ -56,6 +57,10 @@ version = "0.1.0"
 dependencies = [
  "aho-corasick",
 ]
+
+[[package]]
+name = "day02"
+version = "0.1.0"
 
 [[package]]
 name = "memchr"

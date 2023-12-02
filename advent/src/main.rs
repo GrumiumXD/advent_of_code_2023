@@ -22,7 +22,10 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         _ => (true, true),
     };
 
-    let inputs = vec![include_str!("../../inputs/day01.txt")];
+    let inputs = vec![
+        include_str!("../../inputs/day01.txt"),
+        include_str!("../../inputs/day02.txt"),
+    ];
 
     if opts.day < 1 && opts.day > inputs.len() {
         return Err("Invalid day selected!".into());
@@ -35,6 +38,10 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         1 => (
             parts.0.then(|| day01::part1(input)),
             parts.1.then(|| day01::part2(input)),
+        ),
+        2 => (
+            parts.0.then(|| day02::part1(input)),
+            parts.1.then(|| day02::part2(input)),
         ),
 
         _ => (None, None),
