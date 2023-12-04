@@ -51,7 +51,31 @@ pub fn part1(input: &str) -> String {
 }
 
 pub fn part2(input: &str) -> String {
-    "blub".to_string()
+    let cards = parse_cards(input);
+
+    let mut card_amount = vec![1; cards.len()];
+
+    // build an iterator for the amount of winning points per card
+    let wp_count = cards.iter().map(|c| {
+        c.my_numbers
+            .iter()
+            .filter(|&n| c.winning_numbers.contains(n))
+            .count()
+    });
+
+    // go over all cards and their winning points
+    for (index, amount) in wp_count.enumerate() {
+        // get the multiplier for the current card
+        let multiplier = card_amount.get(index).unwrap().clone();
+
+        // increase the amount of the following cards
+        let upper = card_amount.len().min(index + 1 + amount);
+        for cm in card_amount[index + 1..upper].iter_mut() {
+            *cm += multiplier;
+        }
+    }
+
+    card_amount.iter().sum::<usize>().to_string()
 }
 
 #[cfg(test)]
@@ -72,9 +96,9 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11";
         assert_eq!(result, "13");
     }
 
-    // #[test]
-    // fn p2() {
-    //     let result = part2(INPUT);
-    //     assert_eq!(result, "467835");
-    // }
+    #[test]
+    fn p2() {
+        let result = part2(INPUT);
+        assert_eq!(result, "30");
+    }
 }

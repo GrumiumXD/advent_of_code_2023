@@ -51,7 +51,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         ),
         4 => (
             parts.0.then(|| day04::part1(input)),
-            None, // parts.1.then(|| day04::part2(input)),
+            parts.1.then(|| day04::part2(input)),
         ),
 
         _ => (None, None),
