@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         _ => (true, true),
     };
 
-    let inputs = vec![
+    let inputs = [
         include_str!("../../inputs/day01.txt"),
         include_str!("../../inputs/day02.txt"),
         include_str!("../../inputs/day03.txt"),
@@ -31,6 +31,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         include_str!("../../inputs/day06.txt"),
         include_str!("../../inputs/day07.txt"),
         include_str!("../../inputs/day08.txt"),
+        include_str!("../../inputs/day09.txt"),
     ];
 
     if opts.day < 1 && opts.day > inputs.len() {
@@ -72,6 +73,10 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         8 => (
             parts.0.then(|| day08::part1(input)),
             parts.1.then(|| day08::part2(input)),
+        ),
+        9 => (
+            parts.0.then(|| day09::part1(input)),
+            parts.1.then(|| day09::part2(input)),
         ),
 
         _ => (None, None),
