@@ -2,9 +2,8 @@ fn parse_time_and_distances(input: &str) -> Vec<(i64, i64)> {
     let data = input
         .lines()
         .map(|l| {
-            let (_, numbers) = l.split_once(":").unwrap();
+            let (_, numbers) = l.split_once(':').unwrap();
             numbers
-                .trim()
                 .split_whitespace()
                 .map(|n| n.parse::<i64>().unwrap())
                 .collect::<Vec<_>>()
@@ -32,7 +31,7 @@ pub fn part1(input: &str) -> String {
 }
 
 pub fn part2(input: &str) -> String {
-    let no_spaces = input.replace(" ", "");
+    let no_spaces = input.replace(' ', "");
     let time_and_distances = parse_time_and_distances(&no_spaces);
 
     let race = time_and_distances[0];

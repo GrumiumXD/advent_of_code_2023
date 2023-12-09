@@ -16,11 +16,14 @@ struct MapIterator<'a> {
 }
 
 impl<'a> MapIterator<'a> {
-    fn new(start: &'a str, steps: &Vec<Dir>, maps: &'a HashMap<String, (String, String)>) -> Self {
+    fn new(start: &'a str, steps: &[Dir], maps: &'a HashMap<String, (String, String)>) -> Self {
         MapIterator {
             position: start,
-            steps: Box::new(steps.clone().into_iter().cycle()),
-            maps: maps,
+            // allowed, because this seems to be a known issue
+            // https://rust-lang.github.io/rust-clippy/master/index.html#/unnecessary_to_owned
+            #[allow(clippy::unnecessary_to_owned)]
+            steps: Box::new(steps.to_owned().into_iter().cycle()),
+            maps,
         }
     }
 }
@@ -75,7 +78,7 @@ pub fn part2(input: &str) -> String {
     // let mut count: usize = 0;
     let locations = maps
         .keys()
-        .filter_map(|k| k.ends_with("A").then(|| k.as_str()))
+        .filter_map(|k| k.ends_with('A').then_some(k.as_str()))
         .collect::<Vec<_>>();
 
     // while testing with the actual input I noticed all "paths" have a fixed cycle length
@@ -86,7 +89,7 @@ pub fn part2(input: &str) -> String {
         .map(|&start| {
             let (count, _) = MapIterator::new(start, &steps, &maps)
                 .enumerate()
-                .find(|&(_, loc)| loc.ends_with("Z"))
+                .find(|&(_, loc)| loc.ends_with('Z'))
                 .unwrap();
             count + 1
         })

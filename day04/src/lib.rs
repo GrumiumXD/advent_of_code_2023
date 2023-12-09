@@ -15,8 +15,8 @@ fn parse_cards(input: &str) -> Vec<Card> {
     input
         .lines()
         .map(|line| {
-            let (_, numbers) = line.split_once(":").unwrap();
-            let (left, right) = numbers.split_once("|").unwrap();
+            let (_, numbers) = line.split_once(':').unwrap();
+            let (left, right) = numbers.split_once('|').unwrap();
             let wn = parse_numbers(left.trim());
             let mn = parse_numbers(right.trim());
             Card {
@@ -66,7 +66,7 @@ pub fn part2(input: &str) -> String {
     // go over all cards and their winning points
     for (index, amount) in wp_count.enumerate() {
         // get the multiplier for the current card
-        let multiplier = card_amount.get(index).unwrap().clone();
+        let multiplier = *card_amount.get(index).unwrap();
 
         // increase the amount of the following cards
         let upper = card_amount.len().min(index + 1 + amount);

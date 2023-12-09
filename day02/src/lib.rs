@@ -16,7 +16,7 @@ fn parse_round(input: &str) -> Round {
     let mut b = 0;
 
     input.split(", ").for_each(|cube| {
-        let (count, col) = cube.split_once(" ").unwrap();
+        let (count, col) = cube.split_once(' ').unwrap();
         let count = count.parse::<usize>().unwrap();
         match col {
             "red" => r = count,
@@ -39,10 +39,7 @@ fn parse_games(input: &str) -> Vec<Game> {
         .map(|lines| {
             let (_, round_data) = lines.split_once(": ").unwrap();
             Game {
-                rounds: round_data
-                    .split("; ")
-                    .map(|r| parse_round(r))
-                    .collect::<Vec<_>>(),
+                rounds: round_data.split("; ").map(parse_round).collect::<Vec<_>>(),
             }
         })
         .collect::<Vec<_>>()
@@ -59,13 +56,9 @@ pub fn part1(input: &str) -> String {
         .iter()
         .enumerate()
         .filter_map(|(index, g)| {
-            g.rounds.iter().fold(Some(index + 1), |acc, round| {
-                if acc.is_some()
-                    && round.red <= MAX_RED
-                    && round.green <= MAX_GREEN
-                    && round.blue <= MAX_BLUE
-                {
-                    return acc;
+            g.rounds.iter().try_fold(index + 1, |acc, round| {
+                if round.red <= MAX_RED && round.green <= MAX_GREEN && round.blue <= MAX_BLUE {
+                    return Some(acc);
                 }
 
                 None

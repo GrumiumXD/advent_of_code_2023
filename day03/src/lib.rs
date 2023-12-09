@@ -109,15 +109,19 @@ pub fn part2(input: &str) -> String {
                     gear = check_for_gear(&grid, x, y);
                 }
             } else {
-                if current_number > 0 && gear.is_some() {
-                    part_numbers_with_gears.push((current_number, gear.unwrap()));
+                if let Some(g) = gear {
+                    if current_number > 0 {
+                        part_numbers_with_gears.push((current_number, g));
+                    }
                 }
                 gear = None;
                 current_number = 0;
             }
         }
-        if current_number > 0 && gear.is_some() {
-            part_numbers_with_gears.push((current_number, gear.unwrap()));
+        if let Some(g) = gear {
+            if current_number > 0 {
+                part_numbers_with_gears.push((current_number, g));
+            }
         }
         gear = None;
         current_number = 0;
@@ -137,7 +141,8 @@ pub fn part2(input: &str) -> String {
     // filter out all gears with not exactly 2 numbers and calculate the ratio
     let ratios = gear_numbers
         .values()
-        .filter_map(|numbers| (numbers.len() == 2).then(|| numbers[0] * numbers[1]))
+        .filter(|&numbers| (numbers.len() == 2))
+        .map(|numbers| numbers[0] * numbers[1])
         .collect::<Vec<u32>>();
 
     ratios.iter().sum::<u32>().to_string()

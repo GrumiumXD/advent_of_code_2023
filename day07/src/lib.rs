@@ -64,7 +64,7 @@ impl From<&str> for Type {
             .collect::<Vec<_>>();
 
         occurrences.sort_by(|a, b| b.cmp(a));
-        match (occurrences.get(0), occurrences.get(1)) {
+        match (occurrences.first(), occurrences.get(1)) {
             (Some(5), _) => Type::FiveOfAKind(cards),
             (Some(4), _) => Type::FourOfAKind(cards),
             (Some(3), Some(2)) => Type::FullHouse(cards),
@@ -148,7 +148,7 @@ impl From<&str> for JType {
         let joker_amount = cards.iter().filter(|&card| *card == JCard::Joker).count();
 
         occurrences.sort_by(|a, b| b.cmp(a));
-        match (occurrences.get(0), occurrences.get(1), joker_amount) {
+        match (occurrences.first(), occurrences.get(1), joker_amount) {
             (Some(5), _, _) => JType::FiveOfAKind(cards),
             (Some(4), _, 4) => JType::FiveOfAKind(cards),
             (Some(4), _, 1) => JType::FiveOfAKind(cards),
@@ -181,7 +181,7 @@ pub fn part1(input: &str) -> String {
     let mut hands = input
         .lines()
         .map(|line| {
-            let (h, b) = line.split_once(" ").unwrap();
+            let (h, b) = line.split_once(' ').unwrap();
 
             Hand {
                 cards: h.into(),
@@ -204,7 +204,7 @@ pub fn part2(input: &str) -> String {
     let mut hands = input
         .lines()
         .map(|line| {
-            let (h, b) = line.split_once(" ").unwrap();
+            let (h, b) = line.split_once(' ').unwrap();
 
             JHand {
                 cards: h.into(),

@@ -34,8 +34,8 @@ fn parse_ranges(input: &str) -> RangeMap {
     let mut ranges = Vec::new();
 
     for line in input.lines() {
-        let (target, range) = line.split_once(" ").unwrap();
-        let (start, length) = range.split_once(" ").unwrap();
+        let (target, range) = line.split_once(' ').unwrap();
+        let (start, length) = range.split_once(' ').unwrap();
 
         let target = target.parse::<usize>().unwrap();
         let start = start.parse::<usize>().unwrap();
