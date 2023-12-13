@@ -12,7 +12,7 @@ fn parse_galaxies(input: &str) -> Vec<(usize, usize)> {
         .collect::<Vec<_>>()
 }
 
-fn expand(galaxies: &mut Vec<(usize, usize)>, expansion: usize) {
+fn expand(galaxies: &mut [(usize, usize)], expansion: usize) {
     let max_x = galaxies
         .iter()
         .map(|(x, _)| *x)
@@ -25,11 +25,9 @@ fn expand(galaxies: &mut Vec<(usize, usize)>, expansion: usize) {
         .expect("there should be a maximum y");
 
     let empty_cols = (0..max_x)
-        .into_iter()
         .filter(|x| !galaxies.iter().any(|(gx, _)| *gx == *x))
         .collect::<Vec<_>>();
     let empty_rows = (0..max_y)
-        .into_iter()
         .filter(|y| !galaxies.iter().any(|(_, gy)| *gy == *y))
         .collect::<Vec<_>>();
 
