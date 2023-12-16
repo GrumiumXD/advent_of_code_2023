@@ -37,6 +37,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         include_str!("../../inputs/day12.txt"),
         include_str!("../../inputs/day13.txt"),
         include_str!("../../inputs/day14.txt"),
+        include_str!("../../inputs/day15.txt"),
     ];
 
     if opts.day < 1 && opts.day > inputs.len() {
@@ -102,6 +103,10 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         14 => (
             parts.0.then(|| day14::part1(input)),
             parts.1.then(|| day14::part2(input)),
+        ),
+        15 => (
+            parts.0.then(|| day15::part1(input)),
+            parts.1.then(|| day15::part2(input)),
         ),
 
         _ => (None, None),
